@@ -3,13 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Mail, Phone, Linkedin, Github, Moon, Sun, Star, ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from "./components/ui/button"
-import { Input } from "./components/ui/input"
-import { Textarea } from "./components/ui/textarea"
-import { Switch } from "./components/ui/switch"
-import { Label } from "./components/ui/label"
-import { Card, CardContent } from "./components/ui/card"
-import { Progress } from "./components/ui/progress"
+import './styles.css'
 
 interface Project {
   title: string;
@@ -70,9 +64,9 @@ const JuanParedesPortfolio: React.FC = () => {
 
   useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark')
+      document.body.classList.add('dark')
     } else {
-      document.documentElement.classList.remove('dark')
+      document.body.classList.remove('dark')
     }
   }, [darkMode])
 
@@ -91,7 +85,7 @@ const JuanParedesPortfolio: React.FC = () => {
 
   const testimonials: Testimonial[] = [
     { name: 'Maria Rodriguez', role: 'Project Manager', content: 'Juan is a dedicated developer who consistently delivers high-quality work. His attention to detail is impressive.' },
-    { name: 'Alex Chen', role: 'Senior Developer', content: 'Working with Juan has been great. He is eager to learn and always brings fresh ideas to the team.' },
+    { name: 'Alex Chen', role: 'Senior Developer', content: 'Working with Juan has been great. He\'s eager to learn and always brings fresh ideas to the team.' },
     { name: 'Sarah Thompson', role: 'UX Designer', content: 'Juan has a good eye for design implementation. He translates our mockups into pixel-perfect interfaces.' },
   ]
 
@@ -129,300 +123,266 @@ const JuanParedesPortfolio: React.FC = () => {
   }
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
-      <div className="bg-white text-black dark:bg-black dark:text-white transition-colors duration-300">
-        <nav className="fixed top-0 left-0 right-0 bg-white dark:bg-black bg-opacity-90 dark:bg-opacity-90 shadow-md z-50">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center py-4">
-              <ul className="flex space-x-6">
-                {['Home', 'About', 'Skills', 'Services', 'Projects', 'Testimonials', 'Contact'].map((item) => (
-                  <li key={item}>
-                    <button
-                      onClick={() => scrollTo(item.toLowerCase())}
-                      className={`text-sm font-medium hover:text-gray-600 dark:hover:text-gray-300 transition-colors ${
-                        activeSection === item.toLowerCase() ? 'text-gray-800 dark:text-gray-200' : 'text-gray-600 dark:text-gray-400'
-                      }`}
-                    >
-                      {item}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <div className="flex items-center space-x-4">
-                <Switch
-                  checked={darkMode}
-                  onCheckedChange={setDarkMode}
-                  id="dark-mode-toggle"
-                />
-                <Label htmlFor="dark-mode-toggle" className="sr-only">
-                  Toggle dark mode
-                </Label>
-                {darkMode ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        <main className="pt-16">
-          <section id="home" className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-900 to-black text-white">
-            <div className="text-center">
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-5xl font-bold mb-4"
-              >
-                Juan Paredes
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-xl mb-8"
-              >
-                Junior Software Developer
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-              >
-                <Button
-                  onClick={() => scrollTo('contact')}
-                  className="bg-white text-black hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
+    <div className={darkMode ? 'dark' : ''}>
+      <nav>
+        <div className="container">
+          <ul>
+            {['Home', 'About', 'Skills', 'Services', 'Projects', 'Testimonials', 'Contact'].map((item) => (
+              <li key={item}>
+                <button
+                  onClick={() => scrollTo(item.toLowerCase())}
+                  className={activeSection === item.toLowerCase() ? 'active' : ''}
                 >
-                  Get in Touch
-                </Button>
-              </motion.div>
-            </div>
-          </section>
+                  {item}
+                </button>
+              </li>
+            ))}
+            <li className="dark-mode-toggle">
+              <button onClick={() => setDarkMode(!darkMode)}>
+                {darkMode ? <Sun /> : <Moon />}
+              </button>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
-          <section id="about" className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">About Me</h2>
-              <div className="flex flex-col md:flex-row items-center gap-8">
-                <img src="/placeholder.svg?height=300&width=300" alt="Juan Paredes" className="rounded-full w-64 h-64 object-cover" />
-                <div>
-                  <p className="mb-4">
-                    I'm Juan Paredes, a passionate Junior Software Developer with a strong foundation in web technologies. I'm dedicated to creating efficient, user-friendly applications and constantly expanding my skills in the ever-evolving world of software development.
-                  </p>
-                  <h3 className="text-xl font-semibold mb-2">Professional Goals</h3>
-                  <ul className="list-disc list-inside mb-4">
-                    <li>Gain expertise in full-stack development</li>
-                    <li>Contribute to open-source projects</li>
-                    <li>Develop scalable and maintainable software solutions</li>
-                  </ul>
-                  <h3 className="text-xl font-semibold mb-2">Mission & Values</h3>
-                  <p>
-                    My mission is to leverage technology to solve real-world problems and improve user experiences. I value continuous learning, collaboration, and writing clean, efficient code.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="skills" className="py-20 bg-white dark:bg-black">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">Skills</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                {skills.map((skill, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="font-medium">{skill.name}</span>
-                      <span>{skill.level}%</span>
-                    </div>
-                    <Progress value={skill.level} className="w-full" />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section id="services" className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">Services</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {[
-                  { title: 'Web Development', description: 'Creating responsive and interactive websites', icon: 'Code' },
-                  { title: 'Front-end Development', description: 'Building user interfaces with modern frameworks', icon: 'Layout' },
-                  { title: 'Back-end Development', description: 'Developing server-side logic and APIs', icon: 'Database' },
-                  { title: 'Mobile-friendly Design', description: 'Ensuring great user experience on all devices', icon: 'Smartphone' },
-                  { title: 'Performance Optimization', description: 'Improving website speed and efficiency', icon: 'Zap' },
-                  { title: 'Code Review', description: 'Providing feedback to improve code quality', icon: 'CheckSquare' },
-                ].map((service, index) => (
-                  <Card key={index} className="transition-transform hover:scale-105 bg-white dark:bg-gray-800">
-                    <CardContent className="p-6">
-                      <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-300">{service.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          <section id="projects" className="py-20 bg-white dark:bg-black">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">Projects</h2>
-              <div className="relative">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentProjectIndex}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex flex-col md:flex-row items-center gap-8"
-                  >
-                    <img src={projects[currentProjectIndex].image} alt={projects[currentProjectIndex].title} className="w-full md:w-1/2 rounded-lg shadow-lg" />
-                    <div className="w-full md:w-1/2">
-                      <h3 className="text-2xl font-semibold mb-4">{projects[currentProjectIndex].title}</h3>
-                      <p className="mb-4">{projects[currentProjectIndex].description}</p>
-                      <Button className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">View Project</Button>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-                <div className="absolute top-1/2 -left-4 -translate-y-1/2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setCurrentProjectIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1))}
-                    className="bg-white dark:bg-gray-800"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="absolute top-1/2 -right-4 -translate-y-1/2">
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={() => setCurrentProjectIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1))}
-                    className="bg-white  dark:bg-gray-800"
-                  >
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="testimonials" className="py-20 bg-gray-50 dark:bg-gray-900">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">Testimonials</h2>
-              <div className="relative max-w-2xl mx-auto">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentTestimonialIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-center"
-                  >
-                    <p className="text-lg mb-4">"{testimonials[currentTestimonialIndex].content}"</p>
-                    <div className="font-semibold">{testimonials[currentTestimonialIndex].name}</div>
-                    <div className="text-gray-600 dark:text-gray-300">{testimonials[currentTestimonialIndex].role}</div>
-                  </motion.div>
-                </AnimatePresence>
-                <div className="flex justify-center mt-4 space-x-2">
-                  {testimonials.map((_, index) => (
-                    <Button
-                      key={index}
-                      variant="outline"
-                      size="icon"
-                      onClick={() => setCurrentTestimonialIndex(index)}
-                      className={`${currentTestimonialIndex === index ? 'bg-gray-200 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'}`}
-                    >
-                      <Star className="h-4 w-4" />
-                    </Button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="contact" className="py-20 bg-white dark:bg-black">
-            <div className="container mx-auto px-4">
-              <h2 className="text-3xl font-bold mb-8 text-center">Contact Me</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleFormChange}
-                      className={`bg-gray-100 dark:bg-gray-800 ${formErrors.name ? 'border-red-500' : ''}`}
-                    />
-                    {formErrors.name && <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>}
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleFormChange}
-                      className={`bg-gray-100 dark:bg-gray-800 ${formErrors.email ? 'border-red-500' : ''}`}
-                    />
-                    {formErrors.email && <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>}
-                  </div>
-                  <div>
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleFormChange}
-                      className={`bg-gray-100 dark:bg-gray-800 ${formErrors.message ? 'border-red-500' : ''}`}
-                    />
-                    {formErrors.message && <p className="text-red-500 text-sm mt-1">{formErrors.message}</p>}
-                  </div>
-                  <Button type="submit" className="bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">Send Message</Button>
-                </form>
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <Mail className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                    <span>juan.paredes@example.com</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Phone className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                    <span>+1 (234) 567-890</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Linkedin className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                    <a href="https://www.linkedin.com/in/juanparedes" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                      linkedin.com/in/juanparedes
-                    </a>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Github className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                    <a href="https://github.com/juanparedes" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                      github.com/juanparedes
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-
-        <footer className="bg-gray-100 dark:bg-gray-900 text-gray-600 dark:text-gray-300 py-8">
-          <div className="container mx-auto px-4 text-center">
-            <p>&copy; {new Date().getFullYear()} Juan Paredes. All rights reserved.</p>
+      <main>
+        <section id="home" className="hero">
+          <div className="container">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Juan Paredes
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Junior Software Developer
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <a href="#contact" className="btn">Get in Touch</a>
+            </motion.div>
           </div>
-        </footer>
+        </section>
 
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-8 right-8 bg-black text-white dark:bg-white dark:text-black p-3 rounded-full shadow-lg hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
-          aria-label="Scroll to top"
-        >
-          <ChevronDown className="w-6 h-6 transform rotate-180" />
-        </button>
-      </div>
+        <section id="about">
+          <div className="container">
+            <h2>About Me</h2>
+            <div className="about-content">
+              <img src="/placeholder.svg?height=300&width=300" alt="Juan Paredes" className="about-image" />
+              <div>
+                <p>
+                  I'm Juan Paredes, a passionate Junior Software Developer with a strong foundation in web technologies. I'm dedicated to creating efficient, user-friendly applications and constantly expanding my skills in the ever-evolving world of software development.
+                </p>
+                <h3 >Professional Goals</h3>
+                <ul>
+                  <li>Gain expertise in full-stack development</li>
+                  <li>Contribute to open-source projects</li>
+                  <li>Develop scalable and maintainable software solutions</li>
+                </ul>
+                <h3>Mission & Values</h3>
+                <p>
+                  My mission is to leverage technology to solve real-world problems and improve user experiences. I value continuous learning, collaboration, and writing clean, efficient code.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="skills">
+          <div className="container">
+            <h2>Skills</h2>
+            <div className="skills-grid">
+              {skills.map((skill, index) => (
+                <div key={index} className="skill-item">
+                  <div className="skill-info">
+                    <span>{skill.name}</span>
+                    <span>{skill.level}%</span>
+                  </div>
+                  <div className="progress-bar">
+                    <div className="progress-bar-fill" style={{ width: `${skill.level}%` }}></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="services">
+          <div className="container">
+            <h2>Services</h2>
+            <div className="services-grid">
+              {[
+                { title: 'Web Development', description: 'Creating responsive and interactive websites' },
+                { title: 'Front-end Development', description: 'Building user interfaces with modern frameworks' },
+                { title: 'Back-end Development', description: 'Developing server-side logic and APIs' },
+                { title: 'Mobile-friendly Design', description: 'Ensuring great user experience on all devices' },
+                { title: 'Performance Optimization', description: 'Improving website speed and efficiency' },
+                { title: 'Code Review', description: 'Providing feedback to improve code quality' },
+              ].map((service, index) => (
+                <div key={index} className="service-item">
+                  <h3>{service.title}</h3>
+                  <p>{service.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="projects">
+          <div className="container">
+            <h2>Projects</h2>
+            <div className="projects-container">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentProjectIndex}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ textAlign: 'center' }}
+                >
+                  <img src={projects[currentProjectIndex].image} alt={projects[currentProjectIndex].title} className="project-image" />
+                  <h3>{projects[currentProjectIndex].title}</h3>
+                  <p>{projects[currentProjectIndex].description}</p>
+                  <a href="#" className="btn">View Project</a>
+                </motion.div>
+              </AnimatePresence>
+              <button
+                className="project-nav prev"
+                onClick={() => setCurrentProjectIndex((prev) => (prev === 0 ? projects.length - 1 : prev - 1))}
+              >
+                <ChevronLeft />
+              </button>
+              <button
+                className="project-nav next"
+                onClick={() => setCurrentProjectIndex((prev) => (prev === projects.length - 1 ? 0 : prev + 1))}
+              >
+                <ChevronRight />
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section id="testimonials">
+          <div className="container">
+            <h2>Testimonials</h2>
+            <div className="testimonial">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentTestimonialIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <p>"{testimonials[currentTestimonialIndex].content}"</p>
+                  <p><strong>{testimonials[currentTestimonialIndex].name}</strong></p>
+                  <p>{testimonials[currentTestimonialIndex].role}</p>
+                </motion.div>
+              </AnimatePresence>
+              <div className="testimonial-nav">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentTestimonialIndex(index)}
+                    className={currentTestimonialIndex === index ? 'active' : ''}
+                  >
+                    <Star />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact">
+          <div className="container">
+            <h2>Contact Me</h2>
+            <form onSubmit={handleSubmit} className="contact-form">
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleFormChange}
+                  className={formErrors.name ? 'error' : ''}
+                />
+                {formErrors.name && <p className="error-message">{formErrors.name}</p>}
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleFormChange}
+                  className={formErrors.email ? 'error' : ''}
+                />
+                {formErrors.email && <p className="error-message">{formErrors.email}</p>}
+              </div>
+              <div className="form-group">
+                <label htmlFor="message">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleFormChange}
+                  className={formErrors.message ? 'error' : ''}
+                ></textarea>
+                {formErrors.message && <p className="error-message">{formErrors.message}</p>}
+              </div>
+              <button type="submit" className="btn">Send Message</button>
+            </form>
+            <div className="contact-info">
+              <div className="contact-item">
+                <Mail />
+                <span>juanfelipeparedes24@gmail.com</span>
+              </div>
+              <div className="contact-item">
+                <Phone />
+                <span>+57 3213426106</span>
+              </div>
+              <div className="contact-item">
+                <Linkedin />
+                <a href="https://www.linkedin.com/in/juan-felipe-paredes-tarazona-a042162bb/" target="_blank" rel="noopener noreferrer">
+                  Juan Felipe Paredes
+                </a>
+              </div>
+              <div className="contact-item">
+                <Github />
+                <a href="https://github.com/JuanFParedes" target="_blank" rel="noopener noreferrer">
+                  JuanFParedes
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div className="container">
+          <p>&copy; {new Date().getFullYear()} Juan Paredes. All rights reserved.</p>
+        </div>
+      </footer>
+
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="scroll-top"
+        aria-label="Scroll to top"
+      >
+        <ChevronDown className="rotate-180" />
+      </button>
     </div>
   )
 }
